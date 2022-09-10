@@ -18,3 +18,9 @@ code {
   border: #ccc 2px solid;
   border-radius: 20px;
 }
+.css-o69gx8-MuiCardMedia-root {
+  object-fit: contain !important;
+}
+.css-185gdzj-MuiCardHeader-root{
+  height: 2rem !important;
+}

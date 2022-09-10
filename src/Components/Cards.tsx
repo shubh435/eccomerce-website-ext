@@ -19,14 +19,14 @@ export default class Cards extends Component<Cart, any> {
     const { category, description, id, image, price, rating, title } =
       this.props;
     return (
-      <Card sx={{ maxWidth: 345, mt: 2, mb: 2, ml: 1, mr: 1 }}>
+      <Card sx={{ maxWidth: 345, mt: 2, mb: 2, ml: 1, mr: 1,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
               {title[0]}
             </Avatar>
           }
-          action={<IconButton aria-label="settings">{price}</IconButton>}
+          action={<IconButton aria-label="settings">${price}</IconButton>}
           title={title}
         />
         <CardMedia component="img" height="194" image={image} alt={title} />
@@ -40,6 +40,7 @@ export default class Cards extends Component<Cart, any> {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
+            px:5
           }}
         >
           <Button variant="contained" color="secondary">
