@@ -17,7 +17,6 @@ export default class Header extends Component<any, any> {
     let { handleFetchApi }: any = this.context;
     handleFetchApi();
   }
- 
 
   render() {
     const { state }: any = this.context;

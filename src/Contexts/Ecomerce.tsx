@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { WithRoutes } from "../HOC/WithRoutes";
 interface MyContextProviderProps {
   children: React.ReactNode;
 }
@@ -8,6 +9,7 @@ const EcommerceContext = React.createContext({});
 interface MyContextProviderState {
   cartValue: string | number;
   cartEle: Cart[];
+  porductCart: Cart[];
 }
 export interface Cart {
   id: string;
@@ -28,6 +30,7 @@ class MyContextProvider extends React.Component<
     this.state = {
       cartValue: 0,
       cartEle: JSON.parse(localStorage.getItem("products")!) || [],
+      porductCart: JSON.parse(localStorage.getItem("cart")!) || [],
     };
   }
 
@@ -47,6 +50,20 @@ class MyContextProvider extends React.Component<
       }
     }
   };
+
+  handleAddToCart = async (id: string) => {
+    const newProduct = this.state.cartEle.find(
+      (product: Cart) => product.id === id
+    );
+    await localStorage.setItem(
+      "cart",
+      JSON.stringify([...this.state.porductCart, newProduct])
+    );
+    this.setState({
+      porductCart: JSON.parse(localStorage.getItem("cart")!),
+      cartValue: this.state.porductCart.length,
+    });
+  };
   render() {
     const { children } = this.props;
     return (
@@ -54,6 +71,7 @@ class MyContextProvider extends React.Component<
         value={{
           state: this.state,
           handleFetchApi: this.handleFetchApi,
+          handleAddToCart: this.handleAddToCart,
         }}
       >
         {children}
@@ -62,4 +80,5 @@ class MyContextProvider extends React.Component<
   }
 }
 
-export { MyContextProvider, EcommerceContext };
+export { EcommerceContext };
+export default WithRoutes(MyContextProvider);

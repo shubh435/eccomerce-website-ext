@@ -11,15 +11,26 @@ import {
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import React, { Component } from "react";
-import { Cart } from "../Contexts/Ecomerce";
+import { Cart, EcommerceContext } from "../Contexts/Ecomerce";
 
 export default class Cards extends Component<Cart, any> {
+  static contextType?: any = EcommerceContext;
   render() {
+    const { handleAddToCart }: any = this.context;
     const expanded = true;
     const { category, description, id, image, price, rating, title } =
       this.props;
     return (
-      <Card sx={{ maxWidth: 345, mt: 2, mb: 2, ml: 1, mr: 1,boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' }}>
+      <Card
+        sx={{
+          maxWidth: 345,
+          mt: 2,
+          mb: 2,
+          ml: 1,
+          mr: 1,
+          boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+        }}
+      >
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -40,10 +51,14 @@ export default class Cards extends Component<Cart, any> {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            px:5
+            px: 5,
           }}
         >
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => handleAddToCart(id)}
+          >
             Add To Cart
           </Button>
           <Button variant="contained" color="success">
