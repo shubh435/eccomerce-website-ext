@@ -11,7 +11,8 @@ import React, { Component } from "react";
 import ShopingIcon from "@material-ui/icons/ShoppingCart";
 import { deepOrange } from "@mui/material/colors";
 import { EcommerceContext } from "../Contexts/Ecomerce";
-export default class Header extends Component<any, any> {
+import { WithRoutes } from "../HOC/WithRoutes";
+class Header extends Component<any, any> {
   static contextType?: any = EcommerceContext;
   componentDidMount() {
     let { handleFetchApi }: any = this.context;
@@ -20,7 +21,7 @@ export default class Header extends Component<any, any> {
 
   render() {
     const { state }: any = this.context;
-
+    console.log({ state });
     return (
       <>
         <AppBar position="static" sx={{ mt: "0px" }}>
@@ -30,6 +31,7 @@ export default class Header extends Component<any, any> {
               component="div"
               align="left"
               sx={{ flexGrow: 1 / 2 }}
+              onClick={() => this.props.navigate("/")}
             >
               ECCOMERSE
             </Typography>
@@ -55,11 +57,11 @@ export default class Header extends Component<any, any> {
             >
               <Button
                 color="info"
-                onClick={() => console.log({ cart: 2 })}
+                onClick={() => this.props.navigate("/cart")}
                 variant="contained"
               >
                 <ShopingIcon />
-                {state.value && (
+                {state.porductCart && (
                   <Avatar
                     sx={{
                       bgcolor: deepOrange[500],
@@ -73,7 +75,7 @@ export default class Header extends Component<any, any> {
                     }}
                     variant="square"
                   >
-                    {state.cartValue}
+                    {state.porductCart.length}
                   </Avatar>
                 )}
               </Button>
@@ -84,3 +86,5 @@ export default class Header extends Component<any, any> {
     );
   }
 }
+
+export default WithRoutes(Header);

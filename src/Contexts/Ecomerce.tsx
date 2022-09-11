@@ -55,14 +55,19 @@ class MyContextProvider extends React.Component<
     const newProduct = this.state.cartEle.find(
       (product: Cart) => product.id === id
     );
-    await localStorage.setItem(
-      "cart",
-      JSON.stringify([...this.state.porductCart, newProduct])
-    );
-    this.setState({
-      porductCart: JSON.parse(localStorage.getItem("cart")!),
-      cartValue: this.state.porductCart.length,
-    });
+
+    if (newProduct) {
+      if (this.state.porductCart.some((cartItem) => cartItem.id === id))
+        return false;
+      await localStorage.setItem(
+        "cart",
+        JSON.stringify([...this.state.porductCart, newProduct])
+      );
+      this.setState({
+        porductCart: JSON.parse(localStorage.getItem("cart")!),
+        cartValue: this.state.porductCart.length,
+      });
+    }
   };
   render() {
     const { children } = this.props;
