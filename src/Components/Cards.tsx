@@ -17,9 +17,7 @@ export default class Cards extends Component<Cart, any> {
   static contextType?: any = EcommerceContext;
   render() {
     const { handleAddToCart }: any = this.context;
-    const expanded = true;
-    const { category, description, id, image, price, rating, title } =
-      this.props;
+    const { description, id, image, price, title } = this.props;
     return (
       <Card
         sx={{
