@@ -90,28 +90,28 @@ class MyContextProvider extends React.Component<
       });
     }
   };
-  handleSubstractButton = (id: string | number) => {
-    const { porductCart } = this.state;
-    const newProducts: Cart[] = porductCart.filter(
-      (product: Cart) => product.id !== id
-    );
-    const newData = porductCart.map(async (product: Cart) => {
-      if (product.id === id) {
-        if (product.quantity! < 1) {
-          this.setState({ porductCart: newProducts });
-        }
-        product.quantity! -= 1;
-      }
-      return { ...product };
-    });
-    localStorage.setItem("cart", JSON.stringify(newData));
-    this.setState({
-      porductCart: JSON.parse(localStorage.getItem("cart")!),
-      cartValue: this.state.porductCart.length,
-    });
+  // handleSubstractButton = (id: string | number) => {
+  //   const { porductCart } = this.state;
+  //   const newProducts: Cart[] = porductCart.filter(
+  //     (product: Cart) => product.id !== id
+  //   );
+  //   const newData = porductCart.map(async (product: Cart) => {
+  //     if (product.id === id) {
+  //       if (product.quantity! < 1) {
+  //         this.setState({ porductCart: newProducts });
+  //       }
+  //       product.quantity! -= 1;
+  //     }
+  //     return { ...product };
+  //   });
+  //   localStorage.setItem("cart", JSON.stringify(newData));
+  //   this.setState({
+  //     porductCart: JSON.parse(localStorage.getItem("cart")!),
+  //     cartValue: this.state.porductCart.length,
+  //   });
 
-    this.handleUpdateAmount();
-  };
+  //   this.handleUpdateAmount();
+  // };
   handleAddButton = (id: string | number) => {
     console.log(id);
     localStorage.setItem(
@@ -140,7 +140,7 @@ class MyContextProvider extends React.Component<
           handleFetchApi: this.handleFetchApi,
           handleAddToCart: this.handleAddToCart,
           handleAddButton: this.handleAddButton,
-          handleSubstractButton: this.handleSubstractButton,
+          // handleSubstractButton: this.handleSubstractButton,
         }}
       >
         {children}
