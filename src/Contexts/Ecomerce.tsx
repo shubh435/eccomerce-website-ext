@@ -106,7 +106,6 @@ class MyContextProvider extends React.Component<
       porductCart: JSON.parse(localStorage.getItem("cart")!),
       cartValue: this.state.porductCart.length,
     });
-
     this.handleUpdateAmount();
   };
   handleAddButton = (id: string | number) => {
