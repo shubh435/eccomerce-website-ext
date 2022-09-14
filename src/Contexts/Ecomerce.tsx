@@ -62,7 +62,7 @@ class MyContextProvider extends React.Component<
       if (this.state.porductCart.some((cartItem) => cartItem.id === id)) {
         this.handleAddButton(id);
       } else {
-        localStorage.setItem(
+        await localStorage.setItem(
           "cart",
           JSON.stringify([
             ...this.state.porductCart,
@@ -70,11 +70,10 @@ class MyContextProvider extends React.Component<
           ])
         );
       }
-      this.setState({
+      await this.setState({
         porductCart: JSON.parse(localStorage.getItem("cart")!),
         cartValue: this.state.porductCart.length,
       });
-
       this.handleUpdateAmount();
     }
   };
@@ -84,34 +83,32 @@ class MyContextProvider extends React.Component<
     let tamount = 0;
     for (let i = 0; i < porductCart.length; i++) {
       tamount += porductCart[i].quantity! * porductCart[i].price;
-      localStorage.setItem("amount", JSON.stringify(tamount));
-      await this.setState({
-        amount: JSON.parse(localStorage.getItem("amount")!),
-      });
     }
+    await localStorage.setItem("amount", JSON.stringify(tamount));
+    await this.setState({
+      amount: JSON.parse(localStorage.getItem("amount")!),
+    });
   };
-  // handleSubstractButton = (id: string | number) => {
-  //   const { porductCart } = this.state;
-  //   const newProducts: Cart[] = porductCart.filter(
-  //     (product: Cart) => product.id !== id
-  //   );
-  //   const newData = porductCart.map(async (product: Cart) => {
-  //     if (product.id === id) {
-  //       if (product.quantity! < 1) {
-  //         this.setState({ porductCart: newProducts });
-  //       }
-  //       product.quantity! -= 1;
-  //     }
-  //     return { ...product };
-  //   });
-  //   localStorage.setItem("cart", JSON.stringify(newData));
-  //   this.setState({
-  //     porductCart: JSON.parse(localStorage.getItem("cart")!),
-  //     cartValue: this.state.porductCart.length,
-  //   });
+  handleSubstractButton = async (id: string | number) => {
+    const { porductCart } = this.state;
+    const newData = porductCart.map((product: Cart) => {
+      if (product.id === id) {
+        product.quantity! -= 1;
+      }
+      return product;
+    });
+    await localStorage.setItem("cart", JSON.stringify(newData));
+    const newProducts: Cart[] = porductCart.filter(
+      (product: Cart) => product.quantity !== 0
+    );
+    await localStorage.setItem("cart", JSON.stringify(newProducts));
+    this.setState({
+      porductCart: JSON.parse(localStorage.getItem("cart")!),
+      cartValue: this.state.porductCart.length,
+    });
 
-  //   this.handleUpdateAmount();
-  // };
+    this.handleUpdateAmount();
+  };
   handleAddButton = (id: string | number) => {
     console.log(id);
     localStorage.setItem(
@@ -131,6 +128,14 @@ class MyContextProvider extends React.Component<
     });
     this.handleUpdateAmount();
   };
+  handleReset = async () => {
+    await localStorage.setItem("cart", JSON.stringify([]));
+    await this.setState({
+      porductCart: JSON.parse(localStorage.getItem("cart")!),
+      cartValue: this.state.porductCart.length,
+    });
+    this.handleUpdateAmount();
+  };
   render() {
     const { children } = this.props;
     return (
@@ -140,7 +145,8 @@ class MyContextProvider extends React.Component<
           handleFetchApi: this.handleFetchApi,
           handleAddToCart: this.handleAddToCart,
           handleAddButton: this.handleAddButton,
-          // handleSubstractButton: this.handleSubstractButton,
+          handleSubstractButton: this.handleSubstractButton,
+          handleReset: this.handleReset,
         }}
       >
         {children}

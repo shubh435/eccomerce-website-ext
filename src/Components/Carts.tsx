@@ -10,7 +10,7 @@ interface CartsState {}
 class Carts extends React.Component<CartsProps, CartsState> {
   static contextType?: any = EcommerceContext;
   render() {
-    const { state }: any = this.context;
+    const { state, handleReset }: any = this.context;
     return (
       <Box
         sx={{
@@ -33,6 +33,14 @@ class Carts extends React.Component<CartsProps, CartsState> {
           <Button color="success" variant="contained">
             {" "}
             Buy Now{" "}
+          </Button>
+          <Button
+            color="success"
+            variant="contained"
+            onClick={() => handleReset()}
+          >
+            {" "}
+            Reset{" "}
           </Button>
         </Box>
       </Box>

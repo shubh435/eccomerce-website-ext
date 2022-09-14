@@ -13,7 +13,7 @@ export default class CardCarts extends Component<Cart> {
   static contextType?: any = EcommerceContext;
 
   render() {
-    const { handleAddButton }: any = this.context;
+    const { handleAddButton, handleSubstractButton }: any = this.context;
     const { id, price, title, quantity } = this.props;
     return (
       <Card
@@ -51,13 +51,13 @@ export default class CardCarts extends Component<Cart> {
           >
             +
           </Button>
-          {/* <Button
+          <Button
             variant="contained"
             color="success"
             onClick={() => handleSubstractButton(id)}
           >
             -
-          </Button> */}
+          </Button>
         </CardActions>
       </Card>
     );
